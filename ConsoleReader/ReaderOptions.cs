@@ -1,7 +1,7 @@
-﻿namespace ConsoleReader
+﻿namespace ConsoleUtils.Reader;
+
+public class ReaderOptions
 {
-    public class ReaderOptions
-    {
-        public string Prefix { get; set; } = "";
-    }
+    public Printer.Printer printer = Printer.Print.Default;
+    public string Prefix { get; set; } = "";
 }

@@ -1,10 +1,9 @@
-﻿using ConsoleReader;
-
-namespace ConsoleUtils.Reader;
+﻿namespace ConsoleUtils.Reader;
 
 public class Reader
 {
     public ReaderOptions Options { get; set; }
+    public Printer.Printer Print => Options.printer;
 
     public Reader(ReaderOptions options)
     {
@@ -21,7 +20,7 @@ public class Reader
     /// <returns>A string that a user inputs.</returns>
     public string ReadLine()
     {
-        Console.Write(Options.Prefix);
+        Print.Write(Options.Prefix);
         return Console.ReadLine() ?? "";
     }
 
@@ -42,7 +41,7 @@ public class Reader
             }
             catch
             {
-                Console.WriteLine($"{typeErrorMessage}");
+                Print.WriteLine($"{typeErrorMessage}");
             }
         }
     }
@@ -76,7 +75,7 @@ public class Reader
             }
             else
             {
-                Console.WriteLine($"Expression wasn't satisfied.");
+                Print.WriteLine($"Expression wasn't satisfied.");
             }
         }
     }
@@ -101,7 +100,7 @@ public class Reader
             }
             else
             {
-                Console.WriteLine($"{expressionErrorMessage}");
+                Print.WriteLine($"{expressionErrorMessage}");
             }
         }
     }
