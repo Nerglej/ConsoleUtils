@@ -1,28 +1,33 @@
 ﻿using ConsoleUtils.Printer;
 using ConsoleUtils.Reader;
 
-SmoothPrinter smoothPrinter = new(0, 10, 500);
+SmoothPrinter sp = new(0, 10, 500);
+Print.Default = sp;
 
-smoothPrinter.WriteLine("Now, what is your name?");
-string name = Read.OfType<string>();
+sp.WriteLine("What is the name of Player 1?");
+string p1 = Read.OfType<string>();
 
-smoothPrinter.WriteLine("And how old are you?");
-int age = Read.OfType<int>();
+sp.WriteLine($"Hello {p1}.");
 
-smoothPrinter.WriteLine($"So, your name is {name}, and you're {age} years old? [y/n]");
+sp.WriteLine("What is the name of Player 2?");
+string p2 = Read.OfType<string>();
 
-char ans = Read.OfType<char>((c) => c == 'y' || c == 'n', "Please enter either 'y' or 'n'");
-
-if (ans == 'y')
+Dictionary<string, Reader> readers = new()
 {
-    smoothPrinter.WriteLine("Eyy, you wrote the correct stuff about yourself!");
-}
-else if (ans == 'n')
-{
-    smoothPrinter.WriteLine("Well, then enter the correct stuff next time!");
+    { p1, new($"{p1} > ") },
+    { p2, new($"{p2} > ") }
+};
 
-}
-else
-{
-    smoothPrinter.WriteLine("This really should not be possible to see in-terminal...");
-}
+sp.WriteLine($"Players, {p1} and {p2} are up againts each other!");
+sp.WriteLine("Now let's see who can write the absolute HIGHEST number!!!");
+
+sp.WriteLine($"Your turn, {p1}");
+long val1 = readers[p1].OfType<long>();
+
+sp.WriteLine($"{val1}!? THAT is certainly a number!!!");
+
+sp.WriteLine($"Your turn, {p2}");
+long val2 = readers[p2].OfType<long>(e => e > val1, "Psst! That number is lower. I would choose something higher.");
+
+sp.WriteLine($"EYYY! {p2} choose a higher number! Congrats on winning!");
+
